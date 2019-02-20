@@ -1,0 +1,71 @@
+package fr.ekinoxx.notes;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.rapidoid.u.U;
+
+public class ChromeAPI {
+
+	private static ChromeOptions options = new ChromeOptions().addArguments("--headless").addArguments("--no-sandbox").addArguments("--disable-dev-shm-usage");
+
+	static {
+		System.setProperty("webdriver.chrome.driver", "chromedriver");
+	}
+
+	public static ChromeDriver setup(String username, String password) {
+		ChromeDriver driver = new ChromeDriver(options);
+		
+		U.sleep(600);
+		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
+		U.sleep(50);
+		int numberOfTry = 0;
+		try {
+			while (!driver.findElement(By.cssSelector("h1")).getText().equals("Accès étudiants")) {
+				numberOfTry++;
+
+				if (numberOfTry > 100) {
+					driver.close();
+					return null;
+				}
+
+				U.sleep(10);
+			}
+		} catch (Exception e) {
+			driver.close();
+			return null;
+		}
+
+		WebElement identifiant = driver.findElement(By.name("identifiant"));
+		identifiant.sendKeys(username);
+
+		WebElement pass = driver.findElement(By.name("pass"));
+		pass.sendKeys(password);
+
+		pass.sendKeys(Keys.ENTER);
+
+		U.sleep(200);
+		numberOfTry = 0;
+		try {
+			while (!driver.findElement(By.cssSelector("a")).isEnabled()
+					|| !driver.findElement(By.cssSelector("a")).getText().equals("Se déconnecter")) {
+				numberOfTry++;
+
+				if (numberOfTry > 100) {
+					driver.close();
+					return null;
+				}
+
+				U.sleep(10);
+			}
+		} catch (Exception e) {
+			driver.close();
+			return null;
+		}
+
+		return driver;
+	}
+
+}

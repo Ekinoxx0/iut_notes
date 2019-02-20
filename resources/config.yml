@@ -1,0 +1,23 @@
+on:
+  port: 81
+  address: 0.0.0.0
+
+admin:
+  port: ${on.port}
+  address: ${on.address}
+
+app:
+  contextPath: ''
+  home: /
+
+gui:
+  brand: 'IUT'
+  search: false
+  navbar: true
+  fluid: false
+  cdn: auto
+  menu: {}
+
+users:
+  grj3360a:
+    roles: administrator
