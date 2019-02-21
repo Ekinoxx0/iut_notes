@@ -7,28 +7,35 @@ jobs: # a collection of steps
     docker: # run the steps with Docker
       - image: circleci/openjdk:8-jdk-browsers # ...with this image as the primary container; this is where all `steps` will run
 
-    steps: # a collection of executable commands
+    steps:
 
-      - checkout # check out source code to working directory
+      - checkout
 
-      #- restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-      #    key: iut_notes-{{ checksum "pom.xml" }}
+      - restore_cache:
+          key: iut_notes-{{ checksum "pom.xml" }}
+
+      - restore_cache:
+          key: target-{{ checksum "pom.xml" }}
       
-      #- run: mvn dependency:go-offline # gets the project dependencies
+      - run: mvn dependency:go-offline
       
-      #- save_cache: # saves the project dependencies
-          #paths:
-          #  - ~/.m2
-          #key: iut_notes-{{ checksum "pom.xml" }}
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: iut_notes-{{ checksum "pom.xml" }}
       
       - run: mvn install
       
       #- store_test_results:
-       #   path: target/surefire-reports
+      #   path: target/surefire-reports
       
-      #- store_artifacts:
-      #    path: target/WebAPI-1.0.jar
+      - store_artifacts:
+          path: target/WebAPI-1.0.jar
+
+      - save_cache:
+          paths:
+            - target/libs
+          key: target-{{ checksum "pom.xml" }}
 
       - save_cache:
           key: finalJar-{{ .Environment.CIRCLE_SHA1 }}
