@@ -30,6 +30,10 @@ public class ChromeAPI {
 				numberOfTry++;
 
 				if (numberOfTry > 300) {
+					try {
+						Log.info(driver.findElement(By.cssSelector("h1")).getText());
+					}catch (Exception e) {}
+					
 					Log.info(driver.getPageSource());
 					throw new IllegalAccessException("Never finded first title page...");
 				}
