@@ -30,8 +30,10 @@ public class ChromeAPI {
 				numberOfTry++;
 				try {
 					Log.info(driver.findElement(By.cssSelector("h1")).getText());
-					Log.info(!driver.findElement(By.cssSelector("h1")).getText().contains("Accès étudiants") + "");
-					Log.info(!driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("accès") + "");
+					Log.info(driver.findElement(By.cssSelector("h1")).getText().contains("Accès étudiants") + "");
+					Log.info(driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("accès") + "");
+					Log.info(driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("acc") + "");
+					Log.info(driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("tudiants") + "");
 				}catch (Exception e) {}
 
 				if (numberOfTry > 20) {
