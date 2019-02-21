@@ -17,7 +17,7 @@ public class IUTLoginProvider implements LoginProvider {
 	private HashMap<String, Boolean> gainedState = new HashMap<>();
 
 	@Override
-	public boolean login(Req req, String username, String password) throws Exception {
+	public boolean login(Req req, final String username, final String password) throws Exception {
 		req.session().put("username", username);
 		req.session().put("password", password);
 		
