@@ -18,15 +18,13 @@ public class ChromeAPI {
 	public static ChromeDriver setup(String username, String password) {
 		ChromeDriver driver = new ChromeDriver(options);
 		
-		U.sleep(600);
 		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
-		U.sleep(50);
 		int numberOfTry = 0;
 		try {
 			while (!driver.findElement(By.cssSelector("h1")).getText().equals("Accès étudiants")) {
 				numberOfTry++;
 
-				if (numberOfTry > 100) {
+				if (numberOfTry > 300) {
 					driver.close();
 					return null;
 				}
@@ -46,14 +44,13 @@ public class ChromeAPI {
 
 		pass.sendKeys(Keys.ENTER);
 
-		U.sleep(200);
 		numberOfTry = 0;
 		try {
 			while (!driver.findElement(By.cssSelector("a")).isEnabled()
 					|| !driver.findElement(By.cssSelector("a")).getText().equals("Se déconnecter")) {
 				numberOfTry++;
 
-				if (numberOfTry > 100) {
+				if (numberOfTry > 300) {
 					driver.close();
 					return null;
 				}
