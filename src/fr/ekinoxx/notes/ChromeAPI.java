@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.rapidoid.log.Log;
 import org.rapidoid.u.U;
 
 public class ChromeAPI {
@@ -29,6 +30,7 @@ public class ChromeAPI {
 				numberOfTry++;
 
 				if (numberOfTry > 300) {
+					Log.info(driver.getPageSource());
 					throw new IllegalAccessException("Never finded first title page...");
 				}
 
