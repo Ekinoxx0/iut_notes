@@ -28,13 +28,14 @@ public class ChromeAPI {
 		try {//] INFO  fr.ekinoxx.notes.ChromeAPI - Accès étudiants
 			while (!driver.findElement(By.cssSelector("h1")).getText().equals("Accès étudiants")) {
 				numberOfTry++;
+				try {
+					Log.info(driver.findElement(By.cssSelector("h1")).getText());
+					Log.info(!driver.findElement(By.cssSelector("h1")).getText().equals("Accès étudiants") + "");
+					Log.info(!driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("acc") + "");
+				}catch (Exception e) {}
 
 				if (numberOfTry > 20) {
-					try {
-						Log.info(driver.findElement(By.cssSelector("h1")).getText());
-					}catch (Exception e) {}
 					
-					Log.info(driver.getPageSource());
 					throw new IllegalAccessException("Never finded first title page...");
 				}
 
