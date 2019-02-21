@@ -15,17 +15,17 @@ jobs: # a collection of steps
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: iut_notes-{{ checksum "pom.xml" }}
       
-      - run: mvn dependency:go-offline # gets the project dependencies
+      #- run: mvn dependency:go-offline # gets the project dependencies
       
-      - save_cache: # saves the project dependencies
-          paths:
-            - ~/.m2
-          key: iut_notes-{{ checksum "pom.xml" }}
+      #- save_cache: # saves the project dependencies
+          #paths:
+          #  - ~/.m2
+          #key: iut_notes-{{ checksum "pom.xml" }}
       
       - run: mvn install
       
-      - store_test_results:
-          path: target/surefire-reports
+      #- store_test_results:
+       #   path: target/surefire-reports
       
       - store_artifacts:
           path: target/WebAPI-1.0.jar
