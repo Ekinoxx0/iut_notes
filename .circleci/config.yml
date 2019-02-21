@@ -44,6 +44,7 @@ jobs: # a collection of steps
           name: Deploy Over SSH
           command: |
             scp -r -p /home/circleci/ci/target/WebAPI-1.0-jar-with-dependencies.jar $SSH_USER@$SSH_HOST:/home/web/Web.jar
+            ssh $SSH_USER@$SSH_HOST
             web reboot
 
 workflows:
