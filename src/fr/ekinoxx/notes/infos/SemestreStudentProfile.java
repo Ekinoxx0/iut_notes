@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import fr.ekinoxx.web.Main;
+import fr.ekinoxx.web.WebApp;
 import lombok.Getter;
 
 @Getter
@@ -118,7 +118,7 @@ public class SemestreStudentProfile {
 	//
 	
 	public String toJson() {
-		return Main.getGson().toJson(this);
+		return WebApp.getGson().toJson(this);
 	}
 
 }

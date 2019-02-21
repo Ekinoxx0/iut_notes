@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 
 import fr.ekinoxx.notes.NoteRetriever;
 
-public class Main {
+public class WebApp {
 
 	private static Gson gson = new Gson();
 	
