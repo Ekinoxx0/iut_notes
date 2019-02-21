@@ -22,20 +22,25 @@ jobs: # a collection of steps
             - ~/.m2
           key: iut_notes-{{ checksum "pom.xml" }}
       
-      - run: mvn package # run the actual tests
+      - run: mvn package
       
-      - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard. 
-      # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+      - store_test_results:
           path: target/surefire-reports
       
-      - store_artifacts: # store the uberjar as an artifact
-      # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+      - store_artifacts:
           path: target/WebAPI-0.0.1-SNAPSHOT.jar
-      # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
+
+      - save_cache:
+          key: finalJar
+          paths:
+            - target/WebAPI-0.0.1-SNAPSHOT.jar
   deploy:
     machine:
       enabled: true
     steps:
+      - restore_cache:
+          keys:
+            - finalJar
       - run:
           name: Deploy Over SSH
           command: |
