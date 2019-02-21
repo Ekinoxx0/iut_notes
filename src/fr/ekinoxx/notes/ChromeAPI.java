@@ -5,7 +5,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.rapidoid.log.Log;
 import org.rapidoid.u.U;
 
 public class ChromeAPI {
@@ -26,15 +25,8 @@ public class ChromeAPI {
 		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
 		int numberOfTry = 0;
 		try {//] INFO  fr.ekinoxx.notes.ChromeAPI - Accès étudiants
-			while (!driver.findElement(By.cssSelector("h1")).getText().equals("Accès étudiants")) {
+			while (!driver.findElement(By.cssSelector("h1")).getText().contains("tudiants")) {
 				numberOfTry++;
-				try {
-					Log.info(driver.findElement(By.cssSelector("h1")).getText());
-					Log.info(driver.findElement(By.cssSelector("h1")).getText().contains("Accès étudiants") + "");
-					Log.info(driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("accès") + "");
-					Log.info(driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("acc") + "");
-					Log.info(driver.findElement(By.cssSelector("h1")).getText().toLowerCase().contains("tudiants") + "");
-				}catch (Exception e) {}
 
 				if (numberOfTry > 20) {
 					
@@ -61,7 +53,7 @@ public class ChromeAPI {
 		numberOfTry = 0;
 		try {
 			while (!driver.findElement(By.cssSelector("a")).isEnabled()
-					|| !driver.findElement(By.cssSelector("a")).getText().equals("Se déconnecter")) {
+					|| !driver.findElement(By.cssSelector("a")).getText().contains("connecter")) {
 				numberOfTry++;
 
 				if (numberOfTry > 20) {
