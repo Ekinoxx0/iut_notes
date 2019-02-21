@@ -4,8 +4,8 @@ jobs: # a collection of steps
     
     working_directory: ~/ci
 
-    docker: # run the steps with Docker
-      - image: circleci/openjdk:8-jdk-browsers # ...with this image as the primary container; this is where all `steps` will run
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
 
     steps:
 
@@ -13,9 +13,6 @@ jobs: # a collection of steps
 
       - restore_cache:
           key: iut_notes-{{ checksum "pom.xml" }}
-
-      - restore_cache:
-          key: target-{{ checksum "pom.xml" }}
       
       - run: mvn dependency:go-offline
       
@@ -24,23 +21,18 @@ jobs: # a collection of steps
             - ~/.m2
           key: iut_notes-{{ checksum "pom.xml" }}
       
-      - run: mvn install
+      - run: mvn package
       
       #- store_test_results:
       #   path: target/surefire-reports
       
       - store_artifacts:
-          path: target/WebAPI-1.0.jar
-
-      - save_cache:
-          paths:
-            - target/libs
-          key: target-{{ checksum "pom.xml" }}
+          path: target/WebAPI-1.0-jar-with-dependencies.jar
 
       - save_cache:
           key: finalJar-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - target/WebAPI-1.0.jar
+            - target/WebAPI-1.0-jar-with-dependencies.jar
   deploy:
     machine:
       enabled: true
@@ -51,7 +43,7 @@ jobs: # a collection of steps
       - run:
           name: Deploy Over SSH
           command: |
-            scp -r -p /home/circleci/ci/target/WebAPI-1.0.jar $SSH_USER@$SSH_HOST:/home/web/Web.jar
+            scp -r -p /home/circleci/ci/target/WebAPI-1.0-jar-with-dependencies.jar $SSH_USER@$SSH_HOST:/home/web/Web.jar
 
 workflows:
   version: 2
