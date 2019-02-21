@@ -21,3 +21,15 @@ gui:
 users:
   grj3360a:
     roles: administrator
+
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  host: sql.ekinoxx.ovh
+  url: jdbc:mysql://${jdbc.host}:${jdbc.port}?${jdbc.options}
+  username: iut
+  password: iut$password
+  port: 3306
+  options: logger=Slf4JLogger
+
+hibernate:
+  dialect: org.hibernate.dialect.MySQL5Dialect

@@ -1,6 +1,7 @@
 package fr.ekinoxx.web;
 
 import org.rapidoid.http.MediaType;
+import org.rapidoid.jdbc.JDBC;
 import org.rapidoid.log.Log;
 import org.rapidoid.security.Role;
 import org.rapidoid.setup.App;
@@ -19,8 +20,17 @@ public class WebApp {
 		Log.info("Starting application");
 		App.bootstrap(args).jpa().adminCenter().auth();
 		My.loginProvider(new IUTLoginProvider());
+		
 		On.get("/notes").contentType(MediaType.JSON).roles(Role.LOGGED_IN).serve((req) -> {
 			return NoteRetriever.noteQueue.getInfo(req.session().get("username").toString());
+		});
+		
+		On.get("/a").json((req) -> {
+			return "aaaa";
+		});
+
+		On.get("/sql").json((req) -> {
+			return JDBC.api().username() + ":" + JDBC.api().password() + "@" + JDBC.api().url() + ":";
 		});
 	}
 

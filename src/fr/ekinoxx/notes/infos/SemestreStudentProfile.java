@@ -16,7 +16,7 @@ public class SemestreStudentProfile {
 	
 	private final String prenom;
 	private final String nom;
-	private final String apogee;
+	private final int apogee;
 	private final String semestre;
     
 	private final ArrayList<UEInfo> ues = new ArrayList<>();
@@ -28,7 +28,7 @@ public class SemestreStudentProfile {
         
         prenom = unparsed_l1[0];
         nom = unparsed_l1[1];
-        apogee = unparsed_l1[2].replace("(", "").replace(")", "").replace(".", "");
+        apogee = Integer.parseInt(unparsed_l1[2].replace("(", "").replace(")", "").replace(".", ""));
         semestre = unparsed_l2[1];
         
         for(WebElement ue : driver.findElements(By.xpath("/html/body/ul"))) {
