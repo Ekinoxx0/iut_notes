@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import javax.security.auth.callback.Callback;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import fr.ekinoxx.notes.infos.SemestreStudentProfile;
@@ -13,7 +12,7 @@ public class NoteRetriever {
 	
 	public static abstract class NoteCallback implements Callback {
 		public abstract void call(SemestreStudentProfile ni);
-		public abstract void error();
+		public abstract void error(Exception e);
 	}
 	
 	public static NoteRetriever noteQueue = new NoteRetriever();
@@ -31,12 +30,12 @@ public class NoteRetriever {
 		logins.put(username, password);
 	}
 	
-	public void request(String username, String password, NoteCallback nc) {
+	public void request(String username, String password, NoteCallback nc) throws IllegalAccessException {
 		if(logins.containsKey(username) && logins.containsValue(password)) {
 			if(cachedInformation.containsKey(username)) {
 				nc.call(cachedInformation.get(username));
 			} else {
-				nc.error();
+				nc.error(new IllegalAccessException("Valided logins but no cached informations..."));
 			}
 			return;
 		}
@@ -46,22 +45,15 @@ public class NoteRetriever {
 		try {
 			ChromeDriver driver = ChromeAPI.setup(username, password);
 			
-			try {
-		        if(!driver.findElement(By.cssSelector("a")).getText().equals("Se déconnecter")) {
-		        	nc.error();
-		        	return;
-		        }
-			} catch (Exception e) {
-				nc.error();
-				return;
-			}
-			
 	        SemestreStudentProfile ni = new SemestreStudentProfile(username, driver);
 	        cachedInformation.put(username, ni);
 			
 	        nc.call(ni);
 			driver.close();
-		}catch (Error e) {
+		} catch (IllegalAccessException e) {
+			nc.error(e);
+		} catch (Exception e) {
+			nc.error(e);
 			e.printStackTrace();
 		}
 	}

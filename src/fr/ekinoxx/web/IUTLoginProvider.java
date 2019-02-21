@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.rapidoid.http.Req;
 import org.rapidoid.http.customize.LoginProvider;
+import org.rapidoid.log.Log;
 import org.rapidoid.security.Auth;
 
 import fr.ekinoxx.notes.NoteRetriever;
@@ -24,7 +25,8 @@ public class IUTLoginProvider implements LoginProvider {
 		NoteRetriever.noteQueue.request(username, password, new NoteCallback() {
 			
 			@Override
-			public void error() {
+			public void error(Exception e) {
+				Log.error(e != null ? e.getMessage() : "Unknown error");
 				gainedState.put(username, true);
 			}
 			

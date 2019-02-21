@@ -9,13 +9,17 @@ import org.rapidoid.u.U;
 
 public class ChromeAPI {
 
-	private static ChromeOptions options = new ChromeOptions().addArguments("--headless").addArguments("--no-sandbox").addArguments("--disable-dev-shm-usage");
+	private static ChromeOptions options = new ChromeOptions()
+			.addArguments("--headless")
+			.addArguments("--no-sandbox")
+			.addArguments("--disable-dev-shm-usage")
+			.addArguments("--whitelisted-ips=\"127.0.0.1\"");
 
 	static {
 		System.setProperty("webdriver.chrome.driver", "chromedriver");
 	}
 
-	public static ChromeDriver setup(String username, String password) {
+	public static ChromeDriver setup(String username, String password) throws IllegalAccessException {
 		ChromeDriver driver = new ChromeDriver(options);
 		
 		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
@@ -25,12 +29,13 @@ public class ChromeAPI {
 				numberOfTry++;
 
 				if (numberOfTry > 300) {
-					driver.close();
-					return null;
+					throw new IllegalAccessException("Never finded first title page...");
 				}
 
 				U.sleep(10);
 			}
+		} catch (IllegalAccessException e) {
+			throw e;
 		} catch (Exception e) {
 			driver.close();
 			return null;
@@ -51,12 +56,13 @@ public class ChromeAPI {
 				numberOfTry++;
 
 				if (numberOfTry > 300) {
-					driver.close();
-					return null;
+					throw new IllegalAccessException("Never finded panel page, probably invalid user.");
 				}
 
 				U.sleep(10);
 			}
+		} catch (IllegalAccessException e) {
+			throw e;
 		} catch (Exception e) {
 			driver.close();
 			return null;

@@ -28,15 +28,4 @@ public class WebApp {
 		return gson;
 	}
 
-	//On.get("/").roles(Role.LOGGED_IN).html((Req req) -> req.response().redirect("/menu"));
-
-	/*
-	 * On.get("/").mvc(new ReqHandler() { private static final long serialVersionUID
-	 * = -8695419313024250331L;
-	 * 
-	 * @Override public Object execute(Req req) throws Exception { return
-	 * req.isAsync(); } });
-	 * Admin.get("/adminpage").mvc("Hello admin !");
-	 */
-
 }
