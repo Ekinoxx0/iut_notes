@@ -25,11 +25,11 @@ public class ChromeAPI {
 		
 		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
 		int numberOfTry = 0;
-		try {
+		try {//] INFO  fr.ekinoxx.notes.ChromeAPI - Accès étudiants
 			while (!driver.findElement(By.cssSelector("h1")).getText().equals("Accès étudiants")) {
 				numberOfTry++;
 
-				if (numberOfTry > 300) {
+				if (numberOfTry > 20) {
 					try {
 						Log.info(driver.findElement(By.cssSelector("h1")).getText());
 					}catch (Exception e) {}
@@ -38,7 +38,7 @@ public class ChromeAPI {
 					throw new IllegalAccessException("Never finded first title page...");
 				}
 
-				U.sleep(10);
+				U.sleep(50);
 			}
 		} catch (IllegalAccessException e) {
 			throw e;
@@ -61,11 +61,11 @@ public class ChromeAPI {
 					|| !driver.findElement(By.cssSelector("a")).getText().equals("Se déconnecter")) {
 				numberOfTry++;
 
-				if (numberOfTry > 300) {
+				if (numberOfTry > 20) {
 					throw new IllegalAccessException("Never finded panel page, probably invalid user.");
 				}
 
-				U.sleep(10);
+				U.sleep(50);
 			}
 		} catch (IllegalAccessException e) {
 			throw e;
