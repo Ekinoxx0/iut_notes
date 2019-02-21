@@ -31,7 +31,7 @@ jobs: # a collection of steps
           path: target/WebAPI-1.0.jar
 
       - save_cache:
-          key: finalJar
+          key: finalJar-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - target/WebAPI-1.0.jar
   deploy:
@@ -40,11 +40,11 @@ jobs: # a collection of steps
     steps:
       - restore_cache:
           keys:
-            - finalJar
+            - finalJar-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Deploy Over SSH
           command: |
-            scp -r -p /home/circleci/ci/target/WebAPI-0.0.1-SNAPSHOT.jar $SSH_USER@$SSH_HOST:/home/web/Web.jar
+            scp -r -p /home/circleci/ci/target/WebAPI-1.0.jar $SSH_USER@$SSH_HOST:/home/web/Web.jar
 
 workflows:
   version: 2
