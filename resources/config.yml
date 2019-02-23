@@ -25,7 +25,7 @@ users:
 jdbc:
   driver: com.mysql.jdbc.Driver
   host: sql.ekinoxx.ovh
-  url: jdbc:mysql://${jdbc.host}:${jdbc.port}?${jdbc.options}
+  url: jdbc:mysql://${jdbc.host}:${jdbc.port}/iut?${jdbc.options}
   username: iut
   password: iut$password
   port: 3306
