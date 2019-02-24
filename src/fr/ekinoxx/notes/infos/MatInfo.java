@@ -15,7 +15,7 @@ public class MatInfo {
 	private final String titre;
 	private final ArrayList<ExamInfo> exams = new ArrayList<>();
 	
-	public MatInfo(WebElement we_mat) {
+	protected MatInfo(WebElement we_mat) {
     	String[] unparsedUe = we_mat.findElement(By.xpath("./b")).getText().split(" - ");
     	code = unparsedUe[0];
     	titre = unparsedUe[1];

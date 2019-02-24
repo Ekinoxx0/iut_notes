@@ -6,6 +6,7 @@ import org.rapidoid.setup.My;
 
 import com.google.gson.Gson;
 
+import fr.ekinoxx.web.login.SQLLoginProvider;
 import fr.ekinoxx.web.routes.RoutesDeployment;
 import fr.ekinoxx.web.routes.RoutesLimiter;
 
@@ -16,7 +17,7 @@ public class WebApp {
 	public static void main(String[] args) {
 		Log.info("Starting application");
 		App.bootstrap(args).jpa().adminCenter().auth();
-		My.loginProvider(new IUTLoginProvider());
+		My.loginProvider(new SQLLoginProvider());
 		
 		new RoutesDeployment();
 		new RoutesLimiter();

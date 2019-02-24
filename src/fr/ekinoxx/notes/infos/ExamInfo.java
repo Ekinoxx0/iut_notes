@@ -13,7 +13,7 @@ public class ExamInfo {
 	private final String titre;
 	private final double note;
 	
-	public ExamInfo(WebElement exam) {
+	protected ExamInfo(WebElement exam) {
     	String[] unparsedUe = exam.findElement(By.xpath("./td")).getText().split(" - ");
     	code = unparsedUe[0];
     	titre = unparsedUe[1];

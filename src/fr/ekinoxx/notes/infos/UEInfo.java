@@ -17,7 +17,7 @@ public class UEInfo {
 	
 	private final ArrayList<MatInfo> mats = new ArrayList<>();
 	
-	public UEInfo(WebElement we_ue) {
+	protected UEInfo(WebElement we_ue) {
     	String[] unparsedUe = we_ue.findElement(By.xpath("./b")).getText().split(" - ");
     	code = unparsedUe[0];
     	ue = unparsedUe[1];

@@ -1,26 +1,19 @@
-package fr.ekinoxx.notes;
+package fr.ekinoxx.notes.chrome;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.rapidoid.u.U;
 
 public class ChromeAPI {
 
-	private static ChromeOptions options = new ChromeOptions()
-			.addArguments("--headless")
-			.addArguments("--no-sandbox")
-			.addArguments("--disable-dev-shm-usage")
-			.addArguments("--whitelisted-ips=\"127.0.0.1\"");
-
 	static {
-		System.setProperty("webdriver.chrome.driver", "chromedriver");
+		System.setProperty("webdriver.chrome.driver", "ChromeDriver");
 	}
 
 	public static ChromeDriver setup(String username, String password) throws IllegalAccessException {
-		ChromeDriver driver = new ChromeDriver(options);
+		ChromeDriver driver = new ChromeDriver();
 		
 		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
 		int numberOfTry = 0;
