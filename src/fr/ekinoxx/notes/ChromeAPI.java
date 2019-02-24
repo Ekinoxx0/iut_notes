@@ -24,7 +24,7 @@ public class ChromeAPI {
 		
 		driver.navigate().to("https://notes.info.iut-tlse3.fr/visuNotes.php");
 		int numberOfTry = 0;
-		try {//] INFO  fr.ekinoxx.notes.ChromeAPI - Accès étudiants
+		try {
 			while (!driver.findElement(By.cssSelector("h1")).getText().contains("tudiants")) {
 				numberOfTry++;
 
