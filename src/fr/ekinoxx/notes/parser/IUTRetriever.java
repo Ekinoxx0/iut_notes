@@ -26,6 +26,7 @@ public class IUTRetriever {
 	 */
 
 	public boolean fromWeb(String username, String password) {
+		gainedState.remove(username);
 		
 		IUTRetriever.instance.request(username, password, new IUTCallback() {
 			
@@ -47,18 +48,22 @@ public class IUTRetriever {
 	}
 	
 	private void request(String username, String password, IUTCallback callback) {
+		ChromeDriver driver = null;
 		try {
-			ChromeDriver driver = ChromeAPI.setup(username, password);
+			driver = ChromeAPI.setup(username, password);
 			
 	        SemestreInfo ni = SemestreInfo.create(username, driver);
 	        cachedInformation.put(username, ni);
 	        callback.call(ni);
-			driver.close();
 		} catch (IllegalAccessException e) {
 			callback.error(e);
 		} catch (Exception e) {
 			callback.error(e);
 			e.printStackTrace();
+		} finally {
+	        if(driver != null) {
+				driver.close();
+	        }
 		}
 	}
 

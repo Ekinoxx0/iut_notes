@@ -35,12 +35,17 @@ public class SQLLoginProvider implements LoginProvider {
 		req.session().put("username", username);
 		req.session().put("password", password);
 		
-		switch(identifyStudent(username, password)) {
+		LoginResult lr = identifyStudent(username, password);
+		
+		req.session().put(LoginResult.LRESULT_KEY, lr);
+		
+		switch(lr) {
 		
 		case DIRECT:
 			return true;
 			
 		case INVALID_DATA:
+			req.response().redirect("/invalidData");
 			return false;
 			
 		case REFUSED:

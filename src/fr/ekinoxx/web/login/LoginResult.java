@@ -7,5 +7,7 @@ public enum LoginResult {
 	REGISTRATING,
 	INVALID_DATA,
 	REFUSED;
+
+	public static final String LRESULT_KEY = "lresult";
 	
 }

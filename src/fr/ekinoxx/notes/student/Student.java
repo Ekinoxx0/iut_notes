@@ -1,6 +1,7 @@
 package fr.ekinoxx.notes.student;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.rapidoid.datamodel.Results;
 import org.rapidoid.jdbc.JDBC;
 import org.rapidoid.u.U;
 
+import fr.ekinoxx.notes.annotation.SQL;
+import fr.ekinoxx.notes.infos.SemestreInfo;
 import lombok.Getter;
 
 @Getter
@@ -28,12 +31,13 @@ public class Student {
 	
 	//
 	
-	private int id = Integer.MIN_VALUE;
-	private String username;
-	private String password;
-	private String nom;
-	private String prenom;
-	private int apogee;
+	private @SQL int id = Integer.MIN_VALUE;
+	private @SQL String username;
+	private @SQL String password;
+	private @SQL String nom;
+	private @SQL String prenom;
+	private @SQL int apogee;
+	private ArrayList<SemestreInfo> semestres = new ArrayList<>();
 	
 	private Student(String username) {
 		this.username = username;
@@ -72,6 +76,10 @@ public class Student {
 				Map<String, Object> queriedObject = query.first();
 				
 				for(Field f : this.getClass().getDeclaredFields()) {
+					if(!f.isAnnotationPresent(SQL.class)) {
+						continue;
+					}
+					
 					if(!queriedObject.containsKey(f.getName())) {
 						throw new InternalError("Unable to find field " + f.getName() + " in sql query for " + getClass().getName());
 					}
